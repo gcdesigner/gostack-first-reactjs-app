@@ -104,6 +104,11 @@ export const Pagination = styled.div`
     border-radius: 4px;
     border: 0;
 
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     svg {
       margin-right: 10px;
     }

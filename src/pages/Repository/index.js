@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import parse from 'parse-link-header';
 
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
@@ -14,12 +15,19 @@ export default function Repository({ match }) {
   const [issues, setIssues] = useState([]);
   const [issueType, setIssueType] = useState('all');
   const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState('');
 
   useEffect(() => {
     async function getRepo() {
       const [getRepository, getIssues] = await Promise.all([
         api.get(`/repos/${repoName}`),
-        api.get(`/repos/${repoName}/issues?state=${issueType}&page=${page}`),
+        api.get(`/repos/${repoName}/issues`, {
+          params: {
+            state: issueType,
+            per_page: 5,
+            page,
+          },
+        }),
       ]);
 
       const dataRepo = {
@@ -28,12 +36,18 @@ export default function Repository({ match }) {
         name: getRepository.data.name,
       };
 
+      const parseHeader = parse(getIssues.headers.link);
+      if (parseHeader) {
+        setLastPage(parseHeader);
+      } else {
+        setLastPage(1);
+      }
+
       setRepo(dataRepo);
       setIssues(getIssues.data);
-      console.log(getIssues);
     }
     getRepo();
-  }, [issueType, page, issues]);
+  }, [issueType, page]);
 
   function changeIssueType(type) {
     setIssueType(type);
@@ -46,10 +60,9 @@ export default function Repository({ match }) {
   }
 
   function handlePageNext() {
-    if (page >= 1) {
+    if (page !== lastPage) {
       setPage(page + 1);
     }
-    console.log(issues);
   }
 
   return (
@@ -102,12 +115,22 @@ export default function Repository({ match }) {
       </IssuesList>
 
       <Pagination>
-        <button type="button" onClick={handlePagePrev}>
+        <button
+          type="button"
+          onClick={handlePagePrev}
+          className={page === 1 ? 'disabled' : ''}
+          disabled={page === 1 ? 1 : 0}
+        >
           <FaArrowLeft />
           Prev
         </button>
 
-        <button type="button" onClick={handlePageNext}>
+        <button
+          type="button"
+          onClick={handlePageNext}
+          className={page === lastPage ? 'disabled' : ''}
+          disabled={page === lastPage ? 1 : 0}
+        >
           Next
           <FaArrowRight />
         </button>
