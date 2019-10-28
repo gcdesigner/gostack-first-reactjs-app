@@ -120,27 +120,18 @@ export default function Repository({ match }) {
           type="button"
           onClick={handlePagePrev}
           className={page === 1 ? 'disabled' : ''}
-<<<<<<< HEAD
           disabled={page === 1 ? 1 : 0}
-=======
->>>>>>> 2131bda2d17887074f5db854d0cff9eba9dbc8c6
         >
           <FaArrowLeft />
           Prev
         </button>
 
-<<<<<<< HEAD
         <button
           type="button"
           onClick={handlePageNext}
           className={page === lastPage ? 'disabled' : ''}
           disabled={page === lastPage ? 1 : 0}
         >
-=======
-        <strong>Total Issues: {issuesCount}</strong>
-
-        <button type="button" onClick={handlePageNext}>
->>>>>>> 2131bda2d17887074f5db854d0cff9eba9dbc8c6
           Next
           <FaArrowRight />
         </button>
