@@ -1,49 +1,115 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
-export const Container = styled.div`
-  max-width: 700px;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  margin: 80px auto;
+export const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 25px;
 
   h1 {
-    font-size: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    color: #333;
+  }
 
-    svg {
-      margin-right: 10px;
-    }
+  svg {
+    margin-right: 10px;
   }
 `;
 
 export const Form = styled.form`
-  margin-top: 30px;
   display: flex;
+  max-width: 100%;
   flex-direction: row;
+  margin-bottom: 25px;
 
   input {
-    flex: 1;
+    width: 150px;
+    padding: 10px;
     border: 1px solid #eee;
-    padding: 10px 15px;
     border-radius: 4px;
     font-size: 16px;
+    margin-right: 10px;
+
+    &.error {
+      border-color: red;
+    }
+  }
+
+  .select {
+    flex: 1;
+    margin-right: 10px;
+
+    &__control {
+      border: 1px solid #eee;
+      padding: 2px;
+      font-size: 16px;
+    }
   }
 `;
 
-export const SubmitButton = styled.button.attrs({
-  type: 'submit',
-})`
-  background: #7159c1;
-  border: 0;
-  padding: 0 15px;
-  margin-left: 10px;
-  border-radius: 4px;
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(360deg)
+  }
+`;
 
+export const SubmitButton = styled.button.attrs(props => ({
+  disabled: props.disabled,
+}))`
   display: flex;
-  justify-content: center;
   align-items: center;
+  padding: 10px 15px;
+  background-color: #7159c1;
+  border: 0;
+  border-radius: 4px;
+  color: #fff;
+  transition: all 0.5s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+  }
+
+  ${props =>
+    props.spinner &&
+    css`
+      svg {
+        animation: ${rotate} 2s linear infinite;
+      }
+    `}
+`;
+
+export const RepoList = styled.ul`
+  list-style: none;
+  padding: 0;
+
+  li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 0;
+
+    & + li {
+      border-top: 1px solid #eee;
+    }
+
+    span {
+      flex: 1;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+    }
+
+    svg {
+      cursor: pointer;
+    }
+  }
 `;
