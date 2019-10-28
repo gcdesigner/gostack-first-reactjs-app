@@ -14,26 +14,35 @@ export default function Repository({ match }) {
   const [issues, setIssues] = useState([]);
   const [issueType, setIssueType] = useState('all');
   const [page, setPage] = useState(1);
+  const [issuesCount, setIssuesCount] = useState(0);
 
   useEffect(() => {
     async function getRepo() {
       const [getRepository, getIssues] = await Promise.all([
         api.get(`/repos/${repoName}`),
-        api.get(`/repos/${repoName}/issues?state=${issueType}&page=${page}`),
+        api.get(`/repos/${repoName}/issues`, {
+          params: {
+            state: issueType,
+            page,
+            per_page: 5,
+          },
+        }),
       ]);
 
       const dataRepo = {
         login: getRepository.data.owner.login,
         avatar: getRepository.data.owner.avatar_url,
         name: getRepository.data.name,
+        issues: getRepository.data.open_issues_count,
       };
 
       setRepo(dataRepo);
       setIssues(getIssues.data);
-      console.log(getIssues);
+      setIssuesCount(dataRepo.issues);
+      console.log(getRepository);
     }
     getRepo();
-  }, [issueType, page, issues]);
+  }, [issueType, page]);
 
   function changeIssueType(type) {
     setIssueType(type);
@@ -102,10 +111,16 @@ export default function Repository({ match }) {
       </IssuesList>
 
       <Pagination>
-        <button type="button" onClick={handlePagePrev}>
+        <button
+          type="button"
+          onClick={handlePagePrev}
+          className={page === 1 ? 'disabled' : ''}
+        >
           <FaArrowLeft />
           Prev
         </button>
+
+        <strong>Total Issues: {issuesCount}</strong>
 
         <button type="button" onClick={handlePageNext}>
           Next
