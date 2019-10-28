@@ -36,7 +36,7 @@ export const Filter = styled.div`
     transition: all 0.2s;
 
     &.active {
-      background-color: #c15959;
+      background-color: #434343;
     }
   }
 `;
@@ -93,6 +93,7 @@ export const IssuesList = styled.ul`
 export const Pagination = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 20px;
 
   button {
