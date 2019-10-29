@@ -19,25 +19,60 @@ export const Header = styled.div`
     margin-bottom: 10px;
     border: 1px solid #eee;
   }
+
+  h1 {
+    margin-bottom: 10px;
+  }
+`;
+
+export const IssuesContainer = styled.div`
+  &.hide {
+    display: none;
+  }
 `;
 
 export const Filter = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-around;
-  max-width: 50%;
   margin: 20px auto;
 
   button {
-    padding: 5px 10px;
-    background-color: #7159c1;
-    border: 0;
-    color: #fff;
+    width: 70px;
+    padding: 5px;
+    margin: 0 5px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    color: #222;
+    font-weight: 60px;
     border-radius: 4px;
+    box-shadow: 1px 1px 1px #ddd;
     transition: all 0.2s;
 
     &.active {
-      background-color: #434343;
+      color: #fff;
+      background-color: #7159c1;
+      border-color: #7159c1;
     }
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+
+    label {
+      margin-right: 5px;
+    }
+  }
+
+  .issue-type {
+    justify-content: center;
+  }
+
+  .per-page {
+    position: absolute;
+    right: 0;
+    top: 5px;
   }
 `;
 
@@ -120,5 +155,24 @@ export const Pagination = styled.div`
         margin-right: 0;
       }
     }
+  }
+`;
+
+export const Loading = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #7159c1;
+  font-size: 20px;
+  color: #fff;
+
+  svg {
+    margin-bottom: 10px;
   }
 `;
