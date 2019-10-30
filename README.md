@@ -1,3 +1,5 @@
+<img src="https://github.com/gcdesigner/gostack-first-reactjs-app/blob/master/src/assets/gif-app-github.gif" />
+
 ## Desafio 5 - First ReactJS APP
 
 Esse desafio consistia em desenvolver uma aplicação web utilizando a API do GitHub e realmente foi bem desafiador.
