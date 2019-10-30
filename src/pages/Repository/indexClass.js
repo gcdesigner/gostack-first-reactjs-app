@@ -23,7 +23,6 @@ export default class Repository extends Component {
 
   async componentDidMount() {
     const { match } = this.props;
-    console.log(match);
 
     const repoName = decodeURIComponent(match.params.repository);
 

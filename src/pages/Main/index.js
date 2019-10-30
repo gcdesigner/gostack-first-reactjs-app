@@ -24,7 +24,9 @@ export default function Main() {
 
   // update repo field by user
 
-  // get localStorage
+  /**
+   * Get localStorage
+   */
   useEffect(() => {
     const local = localStorage.getItem('repositories');
     if (local) {
@@ -32,17 +34,23 @@ export default function Main() {
     }
   }, []);
 
-  // Add localStorage
+  /**
+   * Add localStorage
+   */
   useEffect(() => {
     localStorage.setItem('repositories', JSON.stringify(repositories));
   }, [repositories]);
 
-  // change user input value
+  /**
+   * Change user input value
+   */
   function handleChangeUser(e) {
     setUser(e.target.value);
   }
 
-  // get repos by user info on onBlur
+  /**
+   * Get repos by user info on onBlur
+   */
   async function handleUser() {
     if (user.length) {
       try {
@@ -70,16 +78,22 @@ export default function Main() {
     }
   }
 
-  // Change repo input value
+  /**
+   * Change repo input value
+   */
   function handleChangeRepo(e) {
     setRepo(e.value);
   }
 
-  // Form action
+  /**
+   * Form action
+   */
   async function handleSubmit(e) {
     e.preventDefault();
 
-    // Check added repositories
+    /**
+     * Check added repositories
+     */
     const repoExists = repositories.find(r => {
       return r.name === `${user}/${repo}`;
     });

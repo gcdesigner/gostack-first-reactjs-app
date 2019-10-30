@@ -19,6 +19,9 @@ import {
 } from './styles';
 
 export default function Repository({ match }) {
+  /**
+   * State component
+   */
   const [repo, setRepo] = useState('');
   const [issues, setIssues] = useState([]);
   const [issueType, setIssueType] = useState('all');
@@ -27,6 +30,9 @@ export default function Repository({ match }) {
   const [perPage, setPerPage] = useState(5);
   const [loading, setLoading] = useState(true);
 
+  /**
+   * ComponentDidAmount and ComponentDidUpdate
+   */
   useEffect(() => {
     const repoName = decodeURIComponent(match.params.repository);
     async function getRepo() {
@@ -41,6 +47,9 @@ export default function Repository({ match }) {
         }),
       ]);
 
+      /**
+       * Get Headers Link to setState Last Page
+       */
       const headers = parse(getIssues.headers.link);
 
       if (headers && headers.last && headers.last !== null) {
@@ -55,25 +64,28 @@ export default function Repository({ match }) {
       setLoading(false);
     }
 
-    console.log('aconteceu dentro do useEffect');
-
     getRepo();
   }, [issueType, page, perPage]);
 
-  {
-    console.log('aconteceu fora do useEffect');
-  }
-
+  /**
+   * Change Issue Type
+   */
   function changeIssueType(type) {
     setIssueType(type);
   }
 
+  /**
+   * Pagination Prev
+   */
   function handlePagePrev() {
     if (page > 1) {
       setPage(page - 1);
     }
   }
 
+  /**
+   * Pagination Next
+   */
   async function handleNextPage() {
     if (page <= lastPage) {
       const count = (await page) + 1;
@@ -81,6 +93,9 @@ export default function Repository({ match }) {
     }
   }
 
+  /**
+   * Loading Page
+   */
   if (loading) {
     return (
       <Loading>
@@ -172,8 +187,8 @@ export default function Repository({ match }) {
             <button
               type="button"
               onClick={handleNextPage}
-              className={page == lastPage ? 'disabled' : ''}
-              disabled={page == lastPage ? 'disabled' : ''}
+              className={page === lastPage ? 'disabled' : ''}
+              disabled={page === lastPage ? 'disabled' : ''}
             >
               Next
               <FaArrowRight />
